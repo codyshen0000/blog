@@ -2,17 +2,27 @@
 layout: default
 ---
 
-<div class="home">
+<div class="ds-wrap">
   {{ content }}
 
   {% if site.posts.size > 0 %}
-  <section class="section latest-posts">
-    <h2>{{ page.list_title | default: "最新文章" }}</h2>
-    <ul class="post-list">
-      {% for post in site.posts %}
+  <section class="ds-section" id="latest">
+    <header class="ds-section-header">
+      <h2 class="ds-section-title">{{ page.list_title | default: "最新文章" }}</h2>
+      <a href="{{ '/feed.xml' | relative_url }}">RSS 订阅</a>
+    </header>
+
+    {% if paginator and paginator.posts.size > 0 %}
+      {% assign post_list = paginator.posts %}
+    {% else %}
+      {% assign post_list = site.posts %}
+    {% endif %}
+
+    <ul class="blog-post-list">
+      {% for post in post_list %}
       <li>
-        <article class="post-card">
-          <p class="post-meta">
+        <article class="ds-card blog-post-card">
+          <p class="blog-post-meta ds-muted">
             <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
             {% if post.categories.size > 0 %}
               {% for category in post.categories %}
@@ -20,18 +30,18 @@ layout: default
               {% endfor %}
             {% endif %}
           </p>
-          <h3 class="post-title">
+          <h3 class="blog-post-title">
             <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
           </h3>
           {% if site.show_excerpts %}
-          <div class="post-excerpt">
+          <div class="blog-post-excerpt">
             {{ post.excerpt }}
           </div>
           {% endif %}
           {% if post.tags.size > 0 %}
-          <div class="tag-row">
+          <div class="blog-tag-row">
             {% for tag in post.tags %}
-              <a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag | url_encode }}">{{ tag }}</a>
+              <a class="ds-tag" href="{{ '/tags/' | relative_url }}#{{ tag | url_encode }}">{{ tag }}</a>
             {% endfor %}
           </div>
           {% endif %}
@@ -39,7 +49,24 @@ layout: default
       </li>
       {% endfor %}
     </ul>
-    <p class="rss-subscribe">通过 <a href="{{ '/feed.xml' | relative_url }}">RSS</a> 订阅</p>
+
+    {% if paginator and paginator.total_pages > 1 %}
+    <nav class="blog-pagination" aria-label="分页">
+      {% if paginator.previous_page %}
+        <a class="ds-btn-ghost" href="{{ paginator.previous_page_path | relative_url }}">← 上一页</a>
+      {% else %}
+        <span class="ds-btn-ghost blog-page-disabled">← 上一页</span>
+      {% endif %}
+
+      <span class="ds-muted">第 {{ paginator.page }} 页，共 {{ paginator.total_pages }} 页</span>
+
+      {% if paginator.next_page %}
+        <a class="ds-btn-ghost" href="{{ paginator.next_page_path | relative_url }}">下一页 →</a>
+      {% else %}
+        <span class="ds-btn-ghost blog-page-disabled">下一页 →</span>
+      {% endif %}
+    </nav>
+    {% endif %}
   </section>
   {% endif %}
 </div>

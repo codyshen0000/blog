@@ -2,22 +2,23 @@
 layout: page
 title: 文章分类
 permalink: /categories/
+prose: false
 ---
 
-<div class="categories-page">
+<div class="blog-taxonomy">
   {% for category in site.categories %}
-    <div class="category-group">
+    <div class="blog-group">
       {% capture category_name %}{{ category | first }}{% endcapture %}
       <h2 id="{{ category_name }}">{{ category_name }}</h2>
-      <ul class="entry-list">
+      <ul class="blog-entry-list">
         {% for post in site.categories[category_name] %}
           <li>
-            <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+            <span class="blog-post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
             <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
             {% if post.tags.size > 0 %}
-              <span class="tag-row">
+              <span class="blog-tag-row">
                 {% for tag in post.tags %}
-                  <a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag | url_encode }}">{{ tag }}</a>
+                  <a class="ds-tag" href="{{ '/tags/' | relative_url }}#{{ tag | url_encode }}">{{ tag }}</a>
                 {% endfor %}
               </span>
             {% endif %}

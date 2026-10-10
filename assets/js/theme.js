@@ -3,6 +3,7 @@
   var root = document.documentElement;
   var btn = document.getElementById("theme");
   var nav = document.getElementById("nav");
+  var menu = document.getElementById("menu");
 
   function isDark() {
     return root.dataset.theme
@@ -24,6 +25,26 @@
       root.dataset.theme = next;
       localStorage.setItem("theme", next);
       sync();
+    });
+  }
+
+  function setMenu(open) {
+    if (!nav) return;
+    nav.classList.toggle("is-open", open);
+    if (menu) menu.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+
+  if (menu && nav) {
+    menu.addEventListener("click", function () {
+      setMenu(!nav.classList.contains("is-open"));
+    });
+    nav.querySelectorAll(".ds-nav-links a").forEach(function (a) {
+      a.addEventListener("click", function () {
+        setMenu(false);
+      });
+    });
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 734) setMenu(false);
     });
   }
 
