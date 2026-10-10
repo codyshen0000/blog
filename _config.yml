@@ -44,7 +44,8 @@ header_pages:
   - about.md
 
 # 自定义主题颜色
-theme_color: "#1a73e8"
+theme_color: "#2b50ff"
+lang: zh-CN
 
 # 排除文件
 exclude:

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 首页
-pagination: 
+pagination:
   enabled: true
 ---
 
@@ -11,7 +11,7 @@ pagination:
     <p>这里是我分享技术知识、编程经验和项目实践的地方。通过记录学习过程和技术探索，希望能够帮助到其他开发者，也欢迎志同道合的朋友一起交流讨论。</p>
   </section>
 
-  <section class="blog-content">
+  <section class="section blog-content">
     <h2>博客内容</h2>
     <ul class="content-list">
       <li><strong>编程语言</strong>：分享各种编程语言的学习笔记和最佳实践</li>
@@ -22,51 +22,56 @@ pagination:
     </ul>
   </section>
 
-  <section class="explore-more">
+  <section class="section explore-more">
     <h2>探索更多</h2>
     <ul class="explore-links">
-      <li><a href="/categories/">按分类浏览</a> - 查看不同技术领域的文章</li>
-      <li><a href="/tags/">按标签浏览</a> - 查找特定主题的内容</li>
+      <li><a href="{{ '/categories/' | relative_url }}">按分类浏览</a> — 查看不同技术领域的文章</li>
+      <li><a href="{{ '/tags/' | relative_url }}">按标签浏览</a> — 查找特定主题的内容</li>
     </ul>
   </section>
 
-  <section class="latest-posts">
+  <section class="section latest-posts">
     <h2>最新文章</h2>
-    
-    <!-- 分页文章列表 -->
+
     <ul class="post-list">
       {% for post in paginator.posts %}
-        <li class="post-item">
-          <h3 class="post-title">
-            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-          </h3>
-          <p class="post-meta">
-            <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
-            {% if post.categories.size > 0 %}
-              <span class="post-categories">分类: 
+        <li>
+          <article class="post-card">
+            <p class="post-meta">
+              <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+              {% if post.categories.size > 0 %}
                 {% for category in post.categories %}
-                  <a href="/categories/#{{ category | slugify }}">{{ category }}</a>{% unless forloop.last %}, {% endunless %}
+                  <a href="{{ '/categories/' | relative_url }}#{{ category | url_encode }}">{{ category }}</a>
                 {% endfor %}
-              </span>
+              {% endif %}
+            </p>
+            <h3 class="post-title">
+              <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            </h3>
+            {% if site.show_excerpts %}
+              <div class="post-excerpt">
+                {{ post.excerpt }}
+                <a href="{{ post.url | relative_url }}" class="read-more">阅读更多 →</a>
+              </div>
             {% endif %}
-          </p>
-          {% if site.show_excerpts %}
-            <div class="post-excerpt">
-              {{ post.excerpt }}
-              <a href="{{ post.url | relative_url }}" class="read-more">阅读更多 &raquo;</a>
-            </div>
-          {% endif %}
+            {% if post.tags.size > 0 %}
+              <div class="tag-row">
+                {% for tag in post.tags %}
+                  <a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag | url_encode }}">{{ tag }}</a>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </article>
         </li>
       {% endfor %}
     </ul>
 
-    <!-- 分页控件 -->
     {% if paginator.total_pages > 1 %}
     <div class="pagination">
       {% if paginator.previous_page %}
-        <a href="{{ paginator.previous_page_path | relative_url }}" class="previous-page">&laquo; 上一页</a>
+        <a href="{{ paginator.previous_page_path | relative_url }}" class="previous-page">← 上一页</a>
       {% else %}
-        <span class="previous-page disabled">&laquo; 上一页</span>
+        <span class="previous-page disabled">← 上一页</span>
       {% endif %}
 
       <span class="page-number">
@@ -74,89 +79,13 @@ pagination:
       </span>
 
       {% if paginator.next_page %}
-        <a href="{{ paginator.next_page_path | relative_url }}" class="next-page">下一页 &raquo;</a>
+        <a href="{{ paginator.next_page_path | relative_url }}" class="next-page">下一页 →</a>
       {% else %}
-        <span class="next-page disabled">下一页 &raquo;</span>
+        <span class="next-page disabled">下一页 →</span>
       {% endif %}
     </div>
     {% endif %}
+
+    <p class="rss-subscribe">通过 <a href="{{ '/feed.xml' | relative_url }}">RSS</a> 订阅</p>
   </section>
 </div>
-
-<style>
-  .home {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  
-  .intro, .blog-content, .explore-more, .latest-posts {
-    margin-bottom: 40px;
-  }
-  
-  .content-list, .explore-links {
-    padding-left: 20px;
-  }
-  
-  .post-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .post-item {
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .post-title {
-    margin-bottom: 5px;
-  }
-  
-  .post-meta {
-    font-size: 0.9em;
-    color: #666;
-    margin-bottom: 10px;
-  }
-  
-  .post-categories a {
-    color: #2a7ae2;
-    text-decoration: none;
-  }
-  
-  .post-excerpt {
-    margin-top: 10px;
-  }
-  
-  .read-more {
-    display: inline-block;
-    margin-top: 5px;
-    color: #2a7ae2;
-    text-decoration: none;
-  }
-  
-  .pagination {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 40px;
-  }
-  
-  .pagination a, .pagination span {
-    padding: 8px 12px;
-    border: 1px solid #eee;
-    border-radius: 3px;
-    text-decoration: none;
-  }
-  
-  .pagination a {
-    color: #2a7ae2;
-  }
-  
-  .pagination span.disabled {
-    color: #ccc;
-  }
-  
-  .page-number {
-    color: #666;
-  }
-</style> 
