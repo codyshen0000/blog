@@ -4,7 +4,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="{{ page.description | default: site.description }}">
   <meta name="keywords" content="技术博客,编程,开发,学习笔记,技术分享">
-  <meta name="theme-color" content="{{ site.theme_color | default: '#2b50ff' }}">
+  <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   <meta name="color-scheme" content="light dark">
 
   <title>{% if page.title %}{{ page.title | escape }} - {{ site.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
@@ -18,8 +19,8 @@
 
   <link rel="shortcut icon" href="{{ '/favicon.ico' | relative_url }}" type="image/x-icon">
   <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" type="image/x-icon">
-  <link rel="stylesheet" href="{{ '/assets/fonts.css' | relative_url }}">
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  <link rel="stylesheet" href="https://codyshen0000.github.io/assets/ds.css">
+  <link rel="stylesheet" href="{{ '/assets/css/blog.css' | relative_url }}">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ '/feed.xml' | relative_url }}">
 

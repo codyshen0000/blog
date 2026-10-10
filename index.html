@@ -1,91 +1,45 @@
 ---
-layout: default
+layout: home
 title: 首页
 pagination:
   enabled: true
 ---
 
-<div class="home">
-  <section class="intro">
-    <h1>欢迎来到我的技术博客</h1>
-    <p>这里是我分享技术知识、编程经验和项目实践的地方。通过记录学习过程和技术探索，希望能够帮助到其他开发者，也欢迎志同道合的朋友一起交流讨论。</p>
-  </section>
+<section class="ds-hero">
+  <p class="ds-hero-kicker">Blog</p>
+  <h1 class="ds-hero-title">欢迎来到我的技术博客</h1>
+  <p class="ds-hero-sub">这里是我分享技术知识、编程经验和项目实践的地方。通过记录学习过程和技术探索，希望能够帮助到其他开发者，也欢迎志同道合的朋友一起交流讨论。</p>
+  <div class="ds-hero-actions">
+    <a class="ds-btn" href="#latest">最新文章</a>
+    <a class="ds-btn-ghost" href="{{ '/categories/' | relative_url }}">按分类浏览</a>
+    <a class="ds-btn-ghost" href="{{ '/tags/' | relative_url }}">按标签浏览</a>
+  </div>
+</section>
 
-  <section class="section blog-content">
-    <h2>博客内容</h2>
-    <ul class="content-list">
-      <li><strong>编程语言</strong>：分享各种编程语言的学习笔记和最佳实践</li>
-      <li><strong>开发框架</strong>：介绍流行框架的使用技巧和深度解析</li>
-      <li><strong>项目实战</strong>：记录实际项目开发过程中的经验和解决方案</li>
-      <li><strong>技术趋势</strong>：关注行业动态，分析新技术的应用前景</li>
-      <li><strong>技术分享</strong>：整理技术讲座和分享会的核心内容</li>
-    </ul>
-  </section>
-
-  <section class="section explore-more">
-    <h2>探索更多</h2>
-    <ul class="explore-links">
-      <li><a href="{{ '/categories/' | relative_url }}">按分类浏览</a> — 查看不同技术领域的文章</li>
-      <li><a href="{{ '/tags/' | relative_url }}">按标签浏览</a> — 查找特定主题的内容</li>
-    </ul>
-  </section>
-
-  <section class="section latest-posts">
-    <h2>最新文章</h2>
-
-    <ul class="post-list">
-      {% for post in paginator.posts %}
-        <li>
-          <article class="post-card">
-            <p class="post-meta">
-              <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
-              {% if post.categories.size > 0 %}
-                {% for category in post.categories %}
-                  <a href="{{ '/categories/' | relative_url }}#{{ category | url_encode }}">{{ category }}</a>
-                {% endfor %}
-              {% endif %}
-            </p>
-            <h3 class="post-title">
-              <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-            </h3>
-            {% if site.show_excerpts %}
-              <div class="post-excerpt">
-                {{ post.excerpt }}
-                <a href="{{ post.url | relative_url }}" class="read-more">阅读更多 →</a>
-              </div>
-            {% endif %}
-            {% if post.tags.size > 0 %}
-              <div class="tag-row">
-                {% for tag in post.tags %}
-                  <a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag | url_encode }}">{{ tag }}</a>
-                {% endfor %}
-              </div>
-            {% endif %}
-          </article>
-        </li>
-      {% endfor %}
-    </ul>
-
-    {% if paginator.total_pages > 1 %}
-    <div class="pagination">
-      {% if paginator.previous_page %}
-        <a href="{{ paginator.previous_page_path | relative_url }}" class="previous-page">← 上一页</a>
-      {% else %}
-        <span class="previous-page disabled">← 上一页</span>
-      {% endif %}
-
-      <span class="page-number">
-        第 {{ paginator.page }} 页，共 {{ paginator.total_pages }} 页
-      </span>
-
-      {% if paginator.next_page %}
-        <a href="{{ paginator.next_page_path | relative_url }}" class="next-page">下一页 →</a>
-      {% else %}
-        <span class="next-page disabled">下一页 →</span>
-      {% endif %}
-    </div>
-    {% endif %}
-
-    <p class="rss-subscribe">通过 <a href="{{ '/feed.xml' | relative_url }}">RSS</a> 订阅</p>
-  </section>
-</div>
+<section class="ds-section">
+  <header class="ds-section-header">
+    <h2 class="ds-section-title">博客内容</h2>
+  </header>
+  <ul class="blog-topic-list">
+    <li class="ds-card ds-card-sm">
+      <h3>编程语言</h3>
+      <p class="ds-muted">分享各种编程语言的学习笔记和最佳实践</p>
+    </li>
+    <li class="ds-card ds-card-sm">
+      <h3>开发框架</h3>
+      <p class="ds-muted">介绍流行框架的使用技巧和深度解析</p>
+    </li>
+    <li class="ds-card ds-card-sm">
+      <h3>项目实战</h3>
+      <p class="ds-muted">记录实际项目开发过程中的经验和解决方案</p>
+    </li>
+    <li class="ds-card ds-card-sm">
+      <h3>技术趋势</h3>
+      <p class="ds-muted">关注行业动态，分析新技术的应用前景</p>
+    </li>
+    <li class="ds-card ds-card-sm">
+      <h3>技术分享</h3>
+      <p class="ds-muted">整理技术讲座和分享会的核心内容</p>
+    </li>
+  </ul>
+</section>
