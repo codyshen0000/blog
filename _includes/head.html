@@ -2,21 +2,27 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="{{ site.description }}">
+  <meta name="description" content="{{ page.description | default: site.description }}">
   <meta name="keywords" content="技术博客,编程,开发,学习笔记,技术分享">
-  
+  <meta name="theme-color" content="{{ site.theme_color | default: '#2b50ff' }}">
+  <meta name="color-scheme" content="light dark">
+
   <title>{% if page.title %}{{ page.title | escape }} - {{ site.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
-  
-  <!-- Favicon -->
+
+  <script>
+    (function () {
+      var t = localStorage.getItem("theme");
+      if (t) document.documentElement.dataset.theme = t;
+    })();
+  </script>
+
   <link rel="shortcut icon" href="{{ '/favicon.ico' | relative_url }}" type="image/x-icon">
   <link rel="icon" href="{{ '/favicon.ico' | relative_url }}" type="image/x-icon">
-  
-  <!-- Stylesheets -->
+  <link rel="stylesheet" href="{{ '/assets/fonts.css' | relative_url }}">
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ '/feed.xml' | relative_url }}">
-  
-  <!-- Google Analytics -->
+
   {% if site.google_analytics %}
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -27,7 +33,4 @@
     ga('send', 'pageview');
   </script>
   {% endif %}
-
-  <!-- 外部JS依赖 -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head> 
+</head>

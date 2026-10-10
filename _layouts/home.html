@@ -3,94 +3,43 @@ layout: default
 ---
 
 <div class="home">
-
   {{ content }}
 
   {% if site.posts.size > 0 %}
-  <h2 class="post-list-heading">{{ page.list_title | default: "最新文章" }}</h2>
-  <ul class="post-list">
-    {% for post in site.posts %}
-    <li>
-      {% assign date_format = site.minima.date_format | default: "%Y-%m-%d" %}
-      <span class="post-meta">{{ post.date | date: date_format }}</span>
-      <h3>
-        <a class="post-link" href="{{ post.url | relative_url }}">
-          {{ post.title | escape }}
-        </a>
-      </h3>
-      {% if site.show_excerpts %}
-      <div class="post-excerpt">
-        {{ post.excerpt }}
-        <a href="{{ post.url | relative_url }}" class="read-more">阅读更多 &raquo;</a>
-      </div>
-      {% endif %}
-    </li>
-    {% endfor %}
-  </ul>
-
-  <p class="rss-subscribe">通过 <a href="{{ "/feed.xml" | relative_url }}">RSS</a> 订阅</p>
+  <section class="section latest-posts">
+    <h2>{{ page.list_title | default: "最新文章" }}</h2>
+    <ul class="post-list">
+      {% for post in site.posts %}
+      <li>
+        <article class="post-card">
+          <p class="post-meta">
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+            {% if post.categories.size > 0 %}
+              {% for category in post.categories %}
+                <a href="{{ '/categories/' | relative_url }}#{{ category | url_encode }}">{{ category }}</a>
+              {% endfor %}
+            {% endif %}
+          </p>
+          <h3 class="post-title">
+            <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+          </h3>
+          {% if site.show_excerpts %}
+          <div class="post-excerpt">
+            {{ post.excerpt }}
+          </div>
+          {% endif %}
+          {% if post.tags.size > 0 %}
+          <div class="tag-row">
+            {% for tag in post.tags %}
+              <a class="tag" href="{{ '/tags/' | relative_url }}#{{ tag | url_encode }}">{{ tag }}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </article>
+      </li>
+      {% endfor %}
+    </ul>
+    <p class="rss-subscribe">通过 <a href="{{ '/feed.xml' | relative_url }}">RSS</a> 订阅</p>
+  </section>
   {% endif %}
-
 </div>
-
-<style>
-  .post-list-heading {
-    margin-top: 30px;
-    margin-bottom: 20px;
-    font-size: 1.8em;
-  }
-  
-  .post-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .post-list li {
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .post-meta {
-    color: #666;
-    font-size: 0.9em;
-  }
-  
-  .post-link {
-    display: block;
-    font-size: 1.5em;
-    margin: 5px 0;
-    color: #333;
-    text-decoration: none;
-  }
-  
-  .post-link:hover {
-    color: #2a7ae2;
-  }
-  
-  .post-excerpt {
-    margin-top: 10px;
-  }
-  
-  .read-more {
-    display: inline-block;
-    margin-top: 8px;
-    color: #2a7ae2;
-    text-decoration: none;
-  }
-  
-  .read-more:hover {
-    text-decoration: underline;
-  }
-  
-  .rss-subscribe {
-    font-size: 0.9em;
-    margin-top: 30px;
-    color: #666;
-  }
-  
-  .rss-subscribe a {
-    color: #2a7ae2;
-    text-decoration: none;
-  }
-</style> 

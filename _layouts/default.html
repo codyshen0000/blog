@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html lang="{{ page.lang | default: site.lang | default: "zh-CN" }}">
-
   {% include head.html %}
-
   <body>
-
+    <a class="skip" href="#content">跳到正文</a>
     {% include header.html %}
 
-    <main class="page-content" aria-label="Content">
-      <div class="wrapper">
+    <main id="content" class="page-content" aria-label="Content">
+      <div class="wrapper{% if page.layout == 'post' or page.layout == 'page' %} article-wrap{% endif %}">
         {{ content }}
       </div>
     </main>
 
     {% include footer.html %}
-
+    <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
   </body>
-
-</html> 
+</html>
